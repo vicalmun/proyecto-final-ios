@@ -24,7 +24,7 @@ struct Habito: Codable {
     var status: Status
     var category: String
     var timesPerDay: Int
-    var completedDates: Set<Date>
+    var completedDates: Set<DateComponents>
     
     var endDate: Date {
         if duration == -1 {

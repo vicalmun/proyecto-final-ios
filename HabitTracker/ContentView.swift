@@ -8,14 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var coordinator: Coordinator
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        
+        TabView{
+            coordinator.makeLeaderboardView()
+                .tabItem {
+                    Label("Inicio", systemImage: "drop.halffull" ).labelStyle(.iconOnly)
+                }
+            coordinator.makeHabitMainView()
+                .tabItem {
+                    Label("Mi sección", systemImage: "face.smiling")
+                }
+            
         }
-        .padding()
     }
 }
 

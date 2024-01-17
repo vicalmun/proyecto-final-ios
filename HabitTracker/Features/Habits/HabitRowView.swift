@@ -29,10 +29,10 @@ struct HabitRowView: View {
                 Text("Fin")
                     .font(.title3)
                     .foregroundStyle(Color(.gray))
-                Text("18")
-                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                    .font(.title)
-                    .foregroundStyle(Color(.cyan))
+//                Text("\(habit.getFormatedDayDate())")
+//                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+//                    .font(.title)
+//                    .foregroundStyle(Color(.cyan))
                 
             }
             Spacer()

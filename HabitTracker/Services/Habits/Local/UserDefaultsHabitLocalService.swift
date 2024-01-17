@@ -23,16 +23,40 @@ struct HabitLocalImpl: HabitLocalService {
         }
         return try JSONDecoder().decode([Habit].self, from: data)
     }
-    
-    // TODO: rehacer esta funcion, porque debería hacer throws
-    func localSaving (habit: Habit) {
+
+//    // TODO: rehacer esta funcion, porque debería hacer throws
+//    func localSaving (habit: Habit) {
+//        do {
+//            var habits = try getHabits()
+//            habits.append(habit)
+//            try save(habits: habits)
+//        } catch {
+//            print("Ha petao")
+//        }
+//        
+//    }   // todo esto debe ir al repo no en la implementación
+
+    func editHabit(habit: Habit) throws {
         do {
             var habits = try getHabits()
-            habits.append(habit)
+            
+            if let index = habits.firstIndex(where: { $0.id == habit.id }) {
+                habits[index] = habit
+                try save(habits: habits)
+            } else {}
+        } catch {
+            throw error
+        }
+    }
+
+    func deleteHabit(habit: Habit) throws {
+        do {
+            var habits = try getHabits()
+            habits.removeAll { $0.id == habit.id }
             try save(habits: habits)
         } catch {
-            print("Ha petao")
+        throw error
         }
-        
     }
+    
 }

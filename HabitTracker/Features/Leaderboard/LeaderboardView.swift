@@ -13,8 +13,9 @@ struct LeaderboardView: View {
     }
 }
 
-#Preview {
-    let coordinator = Coordinator()
-    return coordinator.makeLeaderboardView()
-        .environmentObject(coordinator)
-}
+
+//#Preview {
+//    let coordinator = Coordinator()
+//    return coordinator.makeLeaderboardView()
+//        .environmentObject(coordinator)
+//}

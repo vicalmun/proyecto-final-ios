@@ -15,10 +15,16 @@ struct NewHabitView: View {
     @State private var selectedCategory = 1
     @Environment(\.dismiss) var dismiss
     
-    // Aqui le digo el tipo explicitamente, luego cuando tenga el coordinator
-    // TODO: cambiar por servicio y pasarle la implementacion local a esta vista
-    let localService: HabitLocalImpl
+//    @StateObject private var habitsViewModel: HabitsViewModel
+//
+//    init(habitsViewModel: HabitsViewModel) {
+//        _habitsViewModel = StateObject(wrappedValue: habitsViewModel)
+//    }
+    @ObservedObject private var habitsViewModel: HabitsViewModel
 
+    init(habitsViewModel: HabitsViewModel) {
+        self.habitsViewModel = habitsViewModel
+    }
     
     var body: some View {
         NavigationStack{
@@ -42,10 +48,12 @@ struct NewHabitView: View {
                         Spacer()
                         Button("Guardar") {
                             let habit = Habit(id: UUID(), name: name, description: description, process: 0, startDate: Date.now)
-                            //                            dataSource.add(name: name, diners: numberOfDiners, foodCatId: selectedCategory)
-                            localService.localSaving(habit: habit)
-                            dismiss()
                             
+                            Task {
+                                await habitsViewModel.addHabitToList(habit: habit)
+                                await habitsViewModel.getHabits()
+                            }
+                            dismiss()
                         }
                         .buttonStyle(.borderedProminent)
                         Spacer()
@@ -53,7 +61,7 @@ struct NewHabitView: View {
                 }
                 .listRowBackground(Color.clear)
             }
-            .navigationTitle("Nueva receta")
+            .navigationTitle("Nuevo hábito")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
             }
@@ -61,6 +69,7 @@ struct NewHabitView: View {
     }
 }
 
-#Preview {
-    NewHabitView( localService: HabitLocalImpl())
-}
+
+//#Preview {
+//    NewHabitView( localService: HabitLocalImpl())
+//}
